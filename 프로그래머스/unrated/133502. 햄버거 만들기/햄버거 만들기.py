@@ -1,9 +1,10 @@
 def solution(ingredient):
-    new_list = []
-    answer = 0
+    s = []
+    cnt = 0
     for i in ingredient:
-        new_list.append(i)
-        if new_list[-4:] == [1, 2, 3, 1]:
-            answer += 1
-            del new_list[-4:]
-    return answer
+        s.append(i)
+        if s[-4:] == [1, 2, 3, 1]:
+            cnt += 1
+            for i in range(4):
+                s.pop()
+    return cnt
