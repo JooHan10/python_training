@@ -2,19 +2,19 @@ def solution(code):
     ret = ""
     mode = 0
 
-    for i in range(len(code)):
+    for i, j in enumerate(code):
         if mode == 0:
-            if code[i] != "1":
+            if j != "1":
                 if i % 2 == 0:
-                    ret += (code[i])
-            elif code[i] == "1":
+                    ret += (j)
+            elif j == "1":
                 mode = 1
 
         elif mode == 1:
-            if code[i] != "1":
+            if j != "1":
                 if i % 2 == 1:
-                    ret += (code[i])
-            elif code[i] == "1":
+                    ret += (j)
+            elif j == "1":
                 mode = 0
 
     if ret == "":
