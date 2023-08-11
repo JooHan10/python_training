@@ -2,8 +2,8 @@ import heapq
 
 def solution(scoville, K):
     scoville_heap = []
-    for sco in scoville:
-        heapq.heappush(scoville_heap, sco)
+    for scov in scoville:
+        heapq.heappush(scoville_heap, scov)
 
     cnt = 0
     while scoville_heap[0] < K:
