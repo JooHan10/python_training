@@ -1,13 +1,10 @@
 def solution(s):
-    check = []
-    for i in s:
-        if i == "(":
-            check.append(i)
-        else:
-            if check:
-                check.pop()
-            else:
-                return False
-    if check:
-        return False
-    return True
+    cnt = 0
+    for i in s :
+        if i == '(':
+            cnt += 1
+        elif i == ')':
+            cnt -= 1
+        if cnt < 0:
+            return False
+    return cnt == 0
