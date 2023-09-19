@@ -1,16 +1,18 @@
 def solution(keymap, targets):
     answer = []
-    for target in targets:
-        time = 0
-        for character in target:
-            idx=101
-            for key in keymap:
-                if character in key:
-                    idx = min(idx, key.find(character)+1)
-            if idx == 101:
-                answer.append(-1)
+    dic = {}
+    for i in keymap:
+        for idx,value in enumerate(i):
+            try:
+                if dic[value] > idx: dic[value] = idx+1
+            except: dic[value] = idx+1
+
+    for i in targets:
+        sum=0
+        for j in i:
+            try: sum+=dic[j]
+            except: 
+                sum= -1
                 break
-            time += idx
-        else:
-            answer.append(time)
+        answer.append(sum)
     return answer
