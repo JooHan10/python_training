@@ -1,8 +1,14 @@
 import heapq
+import sys
+
+input = sys.stdin.readline
+INF = int(1e9)
+
+N, K = map(int, input().split())
+graph = [[] for _ in range(100001)]
 
 def dijkstra(graph, start):
     n = len(graph)
-    INF = float('inf')
     distance = [INF] * n
     distance[start] = 0
     q = [(0, start)]
@@ -16,9 +22,6 @@ def dijkstra(graph, start):
                 distance[neighbor] = dist + weight
                 heapq.heappush(q, (distance[neighbor], neighbor))
     return distance
-
-N, K = map(int, input().split())
-graph = [[] for _ in range(100001)]
 
 for i in range(100001):
     if i - 1 >= 0:
