@@ -4,48 +4,51 @@ import sys
 input = sys.stdin.readline
 INF = int(1e9)
 
-def dijkstra(graph, start, end):
-    n = len(graph)
-    dist = [INF] * n
-    prev = [-1] * n
-    dist[start] = 0
-    min_heap = [(0, start)]
-
-    while min_heap:
-        cost, now = heapq.heappop(min_heap)
-        
-        if cost > dist[now]:
-            continue
-        
-        for neighbor_index, weight in graph[now]:
-            if dist[now] + weight < dist[neighbor_index]:
-                dist[neighbor_index] = dist[now] + weight
-                prev[neighbor_index] = now
-                heapq.heappush(min_heap, (dist[neighbor_index], neighbor_index))
-
-    path = []
-    current = end
-    while current != -1:
-        path.append(current)
-        current = prev[current]
-    path.reverse()
-
-    return dist[end], path
-
 n = int(input())
 m = int(input())
+graph = {}
 
-graph = [[] for _ in range(n)]
 for _ in range(m):
-    start, end, bus_cost = map(int, input().split())
-    graph[start-1].append((end-1, bus_cost))
+    a, b, c = map(int, input().split())
+    
+    if a not in graph:
+        graph[a] = []
+    
+    graph[a].append((b, c))
 
-start_city, end_city = map(int, input().split())
-start_city -= 1
-end_city -= 1
+start, end = map(int, input().split())
 
-min_cost, min_cost_path = dijkstra(graph, start_city, end_city)
+dist = [INF] * (n+1)
+prev_node = [0] * (n+1)
 
-print(min_cost)
-print(len(min_cost_path))
-print(*[x + 1 for x in min_cost_path])
+def dijkstra(start):
+    q = []
+    heapq.heappush(q, (0, start))
+    dist[start] = 0
+    while q:
+        weight, node = heapq.heappop(q)
+        
+        if dist[node] < weight:
+            continue
+        
+        if node in graph:
+            for adj_node, adj_weight in graph[node]:
+                cost = weight + adj_weight
+                if cost < dist[adj_node]:
+                    dist[adj_node] = cost
+                    prev_node[adj_node] = node
+                    heapq.heappush(q, (cost, adj_node))
+
+dijkstra(start)
+print(dist[end])
+
+path = [end]
+now = end
+while now != start:
+    now = prev_node[now]
+    path.append(now)
+
+path.reverse()
+
+print(len(path))
+print(' '.join(map(str, path)))
